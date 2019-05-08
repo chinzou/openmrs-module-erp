@@ -6,11 +6,12 @@ import org.openmrs.api.APIException;
 import org.openmrs.module.erp.ErpConstants;
 
 public interface ErpInvoiceService {
-	
+
 	/**
 	 * Returns an invoice by order id.
 	 * 
-	 * @param orderId The ERP invoice id
+	 * @param orderId
+	 *            The ERP invoice id
 	 * @return JSONObject
 	 * @throws APIException
 	 */

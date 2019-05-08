@@ -13,9 +13,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.openmrs.module.erp.ErpConstants;
-import org.openmrs.module.erp.api.impl.odoo.OdooOrderServiceImpl;
+import org.openmrs.module.erp.ErpContext;
+import org.openmrs.module.erp.api.ErpOrderService;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 import org.openmrs.module.webservices.rest.web.v1_0.controller.BaseRestController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,32 +30,34 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
- * This class configured as controller using annotation and mapped with the URL of
- * 'module/${rootArtifactid}/${rootArtifactid}Link.form'.
+ * This class configured as controller using annotation and mapped with the URL
+ * of 'module/${rootArtifactid}/${rootArtifactid}Link.form'.
  */
+
 @Controller
 @RequestMapping(value = "/rest/" + RestConstants.VERSION_1 + "/" + "erp")
 public class ErpOrderController extends BaseRestController {
-	
+
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
-	/**
-	 * All the parameters are optional based on the necessity
-	 * 
-	 * @param uuid
-	 * @return
-	 */
+
+	@Autowired
+	protected ErpContext erpContext;
+
+	@Autowired
+	private ErpOrderService erpOrderService;
+
 	@RequestMapping(value = ErpConstants.ERP_ORDERS_URI, method = RequestMethod.GET)
-	public void getErpOrdersByPatientUuid(@PathVariable("uuid") String uuid, HttpServletResponse response)
-	        throws ResponseException, IOException {
-		OdooOrderServiceImpl odooOrder = new OdooOrderServiceImpl();
-		ArrayList<JSONObject> orders = odooOrder.getErpOrdersByPatientUuid(uuid);
+	public void getErpOrdersByPatientUuid(@PathVariable("uuid") String uuid,
+			HttpServletResponse response) throws ResponseException, IOException {
+		erpOrderService = erpContext.getErpOrderService();
+		ArrayList<JSONObject> orders = erpOrderService.getErpOrdersByPatientUuid(uuid);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		out.print(orders);
+		if (orders != null)
+			out.print(orders);
 		out.flush();
 	}
-	
+
 }

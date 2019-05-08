@@ -11,7 +11,7 @@ import com.odoojava.api.Session;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openmrs.module.erp.api.impl.odoo.OdooOrderServiceImpl;
+import org.openmrs.module.erp.api.impl.odoo.ErpOrderServiceImpl;
 import org.openmrs.module.erp.api.utils.ErpProperties;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 public class OdooOrderServiceImplTest {
-	
+
 	private void setErpProperties() {
 		Properties erpProperties = new Properties();
 		erpProperties.put("erp.host", "localhost");
@@ -34,15 +34,15 @@ public class OdooOrderServiceImplTest {
 		erpProperties.put("erp.user", "admin");
 		erpProperties.put("erp.password", "admin");
 		ErpProperties.initalize(erpProperties);
-		
+
 	}
-	
+
 	private RowCollection getOrder() throws OdooApiException {
-		
+
 		RowCollection order = new RowCollection();
-		
+
 		HashMap<String, Object> data = new HashMap<String, Object>();
-		
+
 		Map<String, Object> fieldData = new HashMap<String, Object>();
 		fieldData.put("string", "Reference Order");
 		fieldData.put("type", "string");
@@ -55,49 +55,50 @@ public class OdooOrderServiceImplTest {
 		fieldData.put("readonly", true);
 		fieldData.put("states", 1);
 		fieldData.put("company_dependent", false);
-		
+
 		Field id = new Field("uuid", fieldData);
 		Field name = new Field("name", fieldData);
 		Field amountTotal = new Field("amount_total", fieldData);
-		
+
 		data.put("partner_uuid", "101659fd-383a-4305-b512-51ea34f69908");
 		data.put("name", "SO/001");
 		data.put("amount_total", "3175.0");
-		
+
 		FieldCollection fields = new FieldCollection();
 		fields.addAll(Arrays.asList(id, name, amountTotal));
-		
+
 		Row row = new Row(data, fields);
 		order.add(row);
-		
+
 		return order;
 	}
-	
+
 	@Test
 	public void getOrdersTest() throws Exception {
-		
+
 		// Setup
-		
+
 		// set properties
 		setErpProperties();
-		
+
 		// create mocked session
 		Session session = mock(Session.class);
 		ObjectAdapter objectAdapter = mock(ObjectAdapter.class);
-		when(objectAdapter.searchAndReadObject(any(FilterCollection.class), any(String[].class))).thenReturn(getOrder());
+		when(objectAdapter.searchAndReadObject(any(FilterCollection.class), any(String[].class)))
+				.thenReturn(getOrder());
 		when(session.getObjectAdapter(any(String.class))).thenReturn(objectAdapter);
-		
-		OdooOrderServiceImpl odooOrderService = new OdooOrderServiceImpl(session);
-		
+
+		ErpOrderServiceImpl odooOrderService = new ErpOrderServiceImpl(session);
+
 		// Replay
-		
+
 		ArrayList<JSONObject> listPricesForOrderables = odooOrderService
-		        .getErpOrdersByPatientUuid("101659fd-383a-4305-b512-51ea34f69908");
-		
+				.getErpOrdersByPatientUuid("101659fd-383a-4305-b512-51ea34f69908");
+
 		// Verify
-		
+
 		Assert.assertEquals(String.valueOf(listPricesForOrderables.get(0).get("name")), "SO/001");
 		Assert.assertEquals(String.valueOf(listPricesForOrderables.get(0).get("amount_total")), "3175.0");
 	}
-	
+
 }
