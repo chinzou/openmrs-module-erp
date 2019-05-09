@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component(ErpConstants.COMPONENT_ERP_CONTEXT)
 public class ErpContext extends ModuleProperties {
-
+	
 	@Autowired
 	@Qualifier(ErpConstants.COMPONENT_ERP_ORDER_SERVICE)
 	protected ErpOrderService erpOrderService;
-
+	
 	public ErpOrderService getErpOrderService() {
 		return erpOrderService;
 	}

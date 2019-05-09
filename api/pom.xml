@@ -1,6 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.openmrs.module</groupId>
 		<artifactId>erp</artifactId>
@@ -9,13 +10,14 @@
 
 	<artifactId>erp-api</artifactId>
 	<packaging>jar</packaging>
-	<name>Erp API</name>
-	<description>API project for Erp</description>
+	<name>OpenMRS ERP Web API - API</name>
+	<description>API subproject of the OpenMRS module to expose Web API endpoints to access ERP data</description>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.odoojava</groupId>
 			<artifactId>odoo-java-api</artifactId>
-			<version>3.0.1</version>
+			<version>${odoo-java-apiVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
@@ -23,27 +25,22 @@
 			<version>${openmrsPlatformVersion}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>emrapi-api</artifactId>
+			<version>${emrapiVersion}</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>webservices.rest-omod-common</artifactId>
-			<version>2.17</version>
-			<scope>test</scope>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160212</version>
 		</dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20160212</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openmrs.module</groupId>
-            <artifactId>emrapi-api</artifactId>
-            <version>1.19</version>
-        </dependency>
-    </dependencies>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -65,7 +62,6 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-
 		<testResources>
 			<testResource>
 				<directory>src/test/resources</directory>
@@ -73,4 +69,5 @@
 			</testResource>
 		</testResources>
 	</build>
+
 </project>

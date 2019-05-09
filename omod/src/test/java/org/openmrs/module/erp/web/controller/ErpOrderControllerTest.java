@@ -24,16 +24,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ErpOrderControllerTest extends BaseContextSensitiveTest {
-
+	
 	@Autowired
 	private ErpContext erpContext;
-
+	
 	@Autowired
 	private TestHelper testHelper;
-
+	
 	@Autowired
 	private ErpOrderController erpOrderController;
-
+	
 	private void setErpProperties() {
 		Properties erpProperties = new Properties();
 		erpProperties.put("erp.host", "localhost");
@@ -42,14 +42,14 @@ public class ErpOrderControllerTest extends BaseContextSensitiveTest {
 		erpProperties.put("erp.user", "admin");
 		erpProperties.put("erp.password", "admin");
 		ErpProperties.initalize(erpProperties);
-
+		
 	}
-
+	
 	@Before
 	public void setup() throws IOException {
 		testHelper.init();
 	}
-
+	
 	@Test
 	public void erpOrderControllerShouldReturnResponse() throws IOException {
 		setErpProperties();
@@ -57,9 +57,9 @@ public class ErpOrderControllerTest extends BaseContextSensitiveTest {
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		when(response.getWriter()).thenReturn(writer);
-
+		
 		erpOrderController.getErpOrdersByPatientUuid("4", response);
-
+		
 	}
-
+	
 }

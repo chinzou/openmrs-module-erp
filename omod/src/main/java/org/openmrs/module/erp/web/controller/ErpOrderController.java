@@ -30,26 +30,26 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
- * This class configured as controller using annotation and mapped with the URL
- * of 'module/${rootArtifactid}/${rootArtifactid}Link.form'.
+ * This class configured as controller using annotation and mapped with the URL of
+ * 'module/${rootArtifactid}/${rootArtifactid}Link.form'.
  */
 
 @Controller
 @RequestMapping(value = "/rest/" + RestConstants.VERSION_1 + "/" + "erp")
 public class ErpOrderController extends BaseRestController {
-
+	
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-
+	
 	@Autowired
 	protected ErpContext erpContext;
-
+	
 	@Autowired
 	private ErpOrderService erpOrderService;
-
+	
 	@RequestMapping(value = ErpConstants.ERP_ORDERS_URI, method = RequestMethod.GET)
-	public void getErpOrdersByPatientUuid(@PathVariable("uuid") String uuid,
-			HttpServletResponse response) throws ResponseException, IOException {
+	public void getErpOrdersByPatientUuid(@PathVariable("uuid") String uuid, HttpServletResponse response)
+	        throws ResponseException, IOException {
 		erpOrderService = erpContext.getErpOrderService();
 		ArrayList<JSONObject> orders = erpOrderService.getErpOrdersByPatientUuid(uuid);
 		response.setContentType("application/json");
@@ -59,5 +59,5 @@ public class ErpOrderController extends BaseRestController {
 			out.print(orders);
 		out.flush();
 	}
-
+	
 }

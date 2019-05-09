@@ -18,31 +18,31 @@ import java.util.Map;
 
 @Component(ErpConstants.COMPONENT_ERP_ORDER_SERVICE)
 public class ErpOrderServiceImpl implements ErpOrderService {
-
+	
 	final static String orderModel = "sale.order";
-
-	private String[] orderModelAttributes = new String[]{"partner_uuid", "name", "amount_total", "state",
-			"pricelist_id", "payment_term_id", "invoice_status", "origin", "create_date", "currency_id"};
-
+	
+	private String[] orderModelAttributes = new String[] { "partner_uuid", "name", "amount_total", "state", "pricelist_id",
+	        "payment_term_id", "invoice_status", "origin", "create_date", "currency_id" };
+	
 	private Session odooSession;
-
+	
 	public ErpOrderServiceImpl() {
 		this.odooSession = new ErpConnection().getERPSession();
 	}
-
+	
 	public ErpOrderServiceImpl(Session session) {
 		this.odooSession = session;
 	}
-
+	
 	@Override
 	public ArrayList<JSONObject> getErpOrdersByPatientUuid(String uuid) throws APIException {
-
+		
 		ArrayList<JSONObject> response = new ArrayList<JSONObject>();
 		try {
 			odooSession.startSession();
 			ObjectAdapter orderAdapter = odooSession.getObjectAdapter(orderModel);
 			FilterCollection filters = new FilterCollection();
-
+			
 			filters.clear();
 			filters.add("partner_uuid", "=", uuid);
 			RowCollection records = orderAdapter.searchAndReadObject(filters, orderModelAttributes);
@@ -57,12 +57,13 @@ public class ErpOrderServiceImpl implements ErpOrderService {
 					response.add(new JSONObject(result));
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			System.out.println("Error while reading data from ERP server:\n\n" + e.getMessage());
 		}
 		return response;
 	}
-
+	
 	@Override
 	public JSONObject getErpOrderById(String erpOrderId) throws APIException {
 		return null;

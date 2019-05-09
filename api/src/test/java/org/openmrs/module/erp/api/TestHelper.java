@@ -11,14 +11,14 @@ import java.io.IOException;
 
 @Component
 public class TestHelper {
-
+	
 	@Autowired
 	private ErpActivator erpActivator;
-
+	
 	@Autowired
 	@Qualifier(ErpConstants.COMPONENT_ERP_ORDER_SERVICE)
 	protected ErpContext context;
-
+	
 	public void init() throws IOException {
 		erpActivator.started();
 	}
