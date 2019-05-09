@@ -37,19 +37,6 @@
 			<classifier>tests</classifier>
 		</dependency>
 		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>webservices.rest-omod</artifactId>
-			<version>${webservices.restVersion}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>webservices.rest-omod-common</artifactId>
-			<version>${webservices.restVersion}</version>
-			<scope>provided</scope>
-			<type>test-jar</type>
-		</dependency>
-		<dependency>
 			<groupId>org.openmrs.api</groupId>
 			<artifactId>openmrs-api</artifactId>
 			<version>${openmrsPlatformVersion}</version>
@@ -88,6 +75,12 @@
     </dependency>
     <dependency>
       <groupId>org.openmrs.module</groupId>
+      <artifactId>reporting-api-2.0</artifactId>
+      <version>${reportingVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openmrs.module</groupId>
       <artifactId>calculation-api</artifactId>
       <version>${calculationVersion}</version>
       <scope>test</scope>
@@ -96,6 +89,24 @@
       <groupId>org.openmrs.module</groupId>
       <artifactId>serialization.xstream-api</artifactId>
       <version>${serialization.xstreamVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openmrs.module</groupId>
+      <artifactId>serialization.xstream-api-2.0</artifactId>
+      <version>${serialization.xstreamVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openmrs.module</groupId>
+      <artifactId>providermanagement-api</artifactId>
+      <version>${providermanagementVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openmrs.module</groupId>
+      <artifactId>emrapi-api-1.12</artifactId>
+      <version>${emrapiVersion}</version>
       <scope>test</scope>
     </dependency>
 		

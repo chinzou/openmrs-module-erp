@@ -1,38 +1,24 @@
 package org.openmrs.module.erp.web.controller;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.openmrs.module.erp.ErpActivator;
-import org.openmrs.module.erp.ErpContext;
-import org.openmrs.module.erp.api.ErpOrderService;
-import org.openmrs.module.erp.api.TestHelper;
-import org.openmrs.module.erp.api.utils.ErpProperties;
-import org.openmrs.test.BaseContextSensitiveTest;
-import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import javax.servlet.http.HttpServletResponse;
 
-public class ErpOrderControllerTest extends BaseContextSensitiveTest {
-	
-	@Autowired
-	private ErpContext erpContext;
-	
-	@Autowired
-	private TestHelper testHelper;
-	
-	@Autowired
-	private ErpOrderController erpOrderController;
+import org.junit.Before;
+import org.junit.Test;
+import org.openmrs.module.erp.ErpContext;
+import org.openmrs.module.erp.api.TestHelper;
+import org.openmrs.module.erp.api.utils.ErpProperties;
+import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ErpOrderControllerTest extends BaseModuleWebContextSensitiveTest {
 	
 	private void setErpProperties() {
 		Properties erpProperties = new Properties();
@@ -45,6 +31,20 @@ public class ErpOrderControllerTest extends BaseContextSensitiveTest {
 		
 	}
 	
+	@Autowired
+	private ErpContext erpContext;
+	
+	@Autowired
+	private TestHelper testHelper;
+	
+	@Autowired
+	private ErpOrderController erpOrderController;
+	
+	public ErpOrderControllerTest() {
+		super();
+		setErpProperties();
+	}
+	
 	@Before
 	public void setup() throws IOException {
 		testHelper.init();
@@ -52,7 +52,6 @@ public class ErpOrderControllerTest extends BaseContextSensitiveTest {
 	
 	@Test
 	public void erpOrderControllerShouldReturnResponse() throws IOException {
-		setErpProperties();
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
